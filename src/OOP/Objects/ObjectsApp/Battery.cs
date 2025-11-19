@@ -2,8 +2,44 @@
 
 public class Battery
 {
-    public float Capacity;
-    public float Level; // 0 = 0% 0.5 = 50% 1 = 100% 
+    private float _capacity;
+    public float Capacity
+    {
+        get
+        {
+            return _capacity;
+        }
+
+        set
+        {
+            ArgumentOutOfRangeException.ThrowIfNegative(value);
+
+            _capacity = value;
+        }
+
+    }
+
+    // backfield
+    private float _level; // 0 = 0% 0.5 = 50% 1 = 100% 
+
+    // Property (wlasciwosc)
+    public float Level
+    {
+        get
+        {
+            return _level;
+        }
+
+        set
+        {
+            if (value > MaxLevel)
+            {
+                throw new Exception($"Nie mozna naladowac powyzej poziom maks. {MaxLevel:P0}");
+            }
+
+            _level = value;
+        }
+    }
 
     public const float MaxLevel = 1;
 

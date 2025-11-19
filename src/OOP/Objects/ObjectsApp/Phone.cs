@@ -9,32 +9,36 @@ namespace GIP.Warehouse;
 // Klasa
 public class Phone
 {
-    // Pola
-    public string model;
-    public string manufacture;
-    public Battery? battery;
-    public string color;
-    public required string serialNumber;
-    public decimal cost;
+    private bool isPowerOn;
+
+    // Wlasciwosci
+    public string Model { get; private set; }
+    public string Manufacture { get; set; }
+    public Battery? Battery { get; set; }
+    public string Color { get; set; }
+    public required string SerialNumber { get; set; }
+    public decimal Cost { get; set; }
 
     // constructor
     // sluzy do ustawiania wartosci domyslnych oraz wymaganych parametrow
     public Phone(string model, string manufacture = "Nokia", Battery battery = null)
     {
-        this.model = model;
-        this.manufacture = manufacture;       
-        this.battery = battery;
+        this.Model = model;
+        this.Manufacture = manufacture;       
+        this.Battery = battery;
     }
 
     // Metoda
     public override string ToString()
     {
+        Model = "a";
+
         return GetFullName();    
     }  
 
     public string GetFullName()
     {
-        return $"model: {model} manufacture: {manufacture} color: {color} s/n: {serialNumber} {battery} cost: {cost:C2}";
+        return $"model: {Model} manufacture: {Manufacture} color: {Color} s/n: {SerialNumber} {Battery} cost: {Cost:C2}";
     }
 
 
