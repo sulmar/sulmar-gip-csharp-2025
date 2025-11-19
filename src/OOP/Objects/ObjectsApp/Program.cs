@@ -1,20 +1,26 @@
-﻿Console.WriteLine("Hello, Objects!");
+﻿using GIP.Warehouse;
 
-string model = "nokia 3310";
-string manufacture = "Nokia";
-float bateryCapacity = 1000.5f;
-string color = "black";
-string serialNumber = "0123456789";
+Console.WriteLine("Hello, Objects!");
 
-Console.WriteLine($"model: {model} color: {color} s/n: {serialNumber}");
+Phone phone1 = new Phone(); // tworzymy nowy obiekt klasy Phone
+phone1.model = "nokia 3310";
+phone1.manufacture = "Nokia";
+phone1.batteryCapacity = 1000.5f;
+phone1.batteryLevel = 1;
+phone1.color = "black";
+phone1.serialNumber = "0123456789";
+phone1.cost = 1000;
 
-string model2 = "nokia 7700";
-string manufacture2 = "Nokia";
-float bateryCapacity2 = 2000.5f;
-string color2 = "red";
-string serialNumber2 = "0222456789";
+phone1.Display();
 
-Console.WriteLine($"model: {model2} color: {color} s/n: {serialNumber2}");
+Phone phone2 = new Phone();
+phone2.model = "nokia 7700";
+phone2.manufacture = "Nokia";
+phone2.batteryCapacity = 2000.5f;
+phone2.color = "red";
+phone2.serialNumber = "0222456789";
+
+phone2.Display();
 
 
 
