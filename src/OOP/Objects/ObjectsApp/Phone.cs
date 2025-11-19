@@ -6,30 +6,6 @@ using System.Threading.Tasks;
 
 namespace GIP.Warehouse;
 
-public class Battery
-{
-    public float Capacity;
-    public float Level; // 0 = 0% 0.5 = 50% 1 = 100% 
-
-    // konstruktor
-    public Battery()
-    {
-        Level = 1;
-    }
-
-    private string GetDescription()
-    {
-        return $"capacity: {Capacity} level: {Level:P2}";
-    }
-
-    public override string ToString()
-    {
-        return GetDescription();
-    }
-
-
-}
-
 // Klasa
 public class Phone
 {
@@ -51,9 +27,15 @@ public class Phone
     }
 
     // Metoda
-    public void Display()
+    public override string ToString()
     {
-        Console.WriteLine($"model: {model} manufacture: {manufacture} color: {color} s/n: {serialNumber} {battery} cost: {cost:C2}");
+        return GetFullName();    
+    }  
+
+    public string GetFullName()
+    {
+        return $"model: {model} manufacture: {manufacture} color: {color} s/n: {serialNumber} {battery} cost: {cost:C2}";
     }
+
 
 }
