@@ -13,5 +13,12 @@ public class Customer
     public string LastName { get; set; }
     public Address InvoicingAddress { get; set; }
     public Address ShippingAddress { get; set; }
+    public string FullName
+    {
+        get
+        {
+            return $"{FirstName} {LastName}";
+        }
+    }
 }
 
