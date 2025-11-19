@@ -15,13 +15,23 @@ public class Phone
     public float batteryCapacity;
     public float batteryLevel; // 0 = 0% 0.5 = 50% 1 = 100% 
     public string color;
-    public string serialNumber;
+    public required string serialNumber;
     public decimal cost;
+
+    // constructor
+    // sluzy do ustawiania wartosci domyslnych oraz wymaganych parametrow
+    public Phone(string model, string manufacture = "Nokia")
+    {
+        this.model = model;
+        this.manufacture = manufacture;
+
+        batteryLevel = 1;
+    }
 
     // Metoda
     public void Display()
     {
-        Console.WriteLine($"model: {model} color: {color} s/n: {serialNumber} level: {batteryLevel:P2} cost: {cost:C2}");
+        Console.WriteLine($"model: {model} manufacture: {manufacture} color: {color} s/n: {serialNumber} level: {batteryLevel:P2} cost: {cost:C2}");
     }
 
 }
