@@ -16,6 +16,18 @@ public class Battery
     {
         Level = 1;
     }
+
+    private string GetDescription()
+    {
+        return $"capacity: {Capacity} level: {Level:P2}";
+    }
+
+    public override string ToString()
+    {
+        return GetDescription();
+    }
+
+
 }
 
 // Klasa
@@ -41,7 +53,7 @@ public class Phone
     // Metoda
     public void Display()
     {
-        Console.WriteLine($"model: {model} manufacture: {manufacture} color: {color} s/n: {serialNumber} capacity: {battery.Capacity} level: {battery.Level:P2} cost: {cost:C2}");
+        Console.WriteLine($"model: {model} manufacture: {manufacture} color: {color} s/n: {serialNumber} {battery} cost: {cost:C2}");
     }
 
 }
