@@ -3,12 +3,14 @@
 
 ## Dziedziczenie
 
-
 ```mermaid 
+classDiagram 
+	class Phone {
+        <<abstract>>
+    }
 
-flowchart 
-*Phone* --> CellPhone --> Smartphone
-
+	Phone <|-- CellPhone
+	CellPhone <|-- Smartphone
 ```
 
 ## Subchapter #1
