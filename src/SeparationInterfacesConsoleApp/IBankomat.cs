@@ -6,16 +6,28 @@ using System.Threading.Tasks;
 
 namespace SeparationInterfacesConsoleApp;
 
-
  // Zasada Separacji Interfejsów
 internal interface IBankomat
 {
-    void Wyplata(decimal kwota);
+    void Wyplata(decimal kwota);       
+}
+
+interface IWplatomat
+{
     void Wplata(decimal kwota);
+}
+
+interface ISaldomat
+{
     decimal Saldo { get; }
 }
 
-class PkoBankomat : IBankomat
+interface IBankomatSaldo : IBankomat, ISaldomat
+{
+
+}
+
+class PkoBankomat : IBankomat, IWplatomat, ISaldomat
 {
     private decimal _saldo;
 
@@ -36,15 +48,10 @@ class PkoBankomat : IBankomat
 }
 
 
-class PekaoBankomat : IBankomat
+class PekaoBankomat : IBankomatSaldo
 {
     private decimal _saldo;
     public decimal Saldo => _saldo;
-
-    public void Wplata(decimal kwota)
-    {
-        throw new NotSupportedException();
-    }
 
     public void Wyplata(decimal kwota)
     {
