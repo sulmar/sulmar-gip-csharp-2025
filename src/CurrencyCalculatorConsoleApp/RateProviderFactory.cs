@@ -17,7 +17,7 @@ class RateProviderFactory
         switch (providerName)
         {
             case "Nbp":
-                return new NbpCurrencyRateProvider();
+                return new NbpCurrencyRateProvider(new HttpClient());
             case "Forex":
                 return new ForexCurrencyRateProvider();
             default:

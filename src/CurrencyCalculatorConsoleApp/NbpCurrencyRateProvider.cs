@@ -9,13 +9,18 @@ namespace CurrencyCalculatorConsoleApp;
 
 class NbpCurrencyRateProvider : IRateProvider   // Klasa NbpCurrencyRateProvider implementuje interfejs IRateProvider
 {
+    private readonly HttpClient _http;
+
+    public NbpCurrencyRateProvider(HttpClient http)
+    {
+        _http = http;
+    }
+
     public decimal GetRate(string currencyCode)
     {
         var url = $"https://api.nbp.pl/api/exchangerates/rates/A/{currencyCode}?format=json";
 
-        HttpClient http = new HttpClient();
-
-        NbpResponse data = http.GetFromJsonAsync<NbpResponse>(url).Result;
+        NbpResponse data = _http.GetFromJsonAsync<NbpResponse>(url).Result;
 
         return data.Rates[0].Mid;
     }
