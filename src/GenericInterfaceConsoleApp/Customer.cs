@@ -6,33 +6,34 @@ using System.Threading.Tasks;
 
 namespace GenericInterfaceConsoleApp;
 
-abstract class Base
+public abstract class Base
 {
     public int Id { get; set; }
 }
 
-class Customer : Base
+public class Customer : Base
 {
     public string Name { get; set; }
 }
 
-class Vehicle : Base
+public class Vehicle : Base
 {
-    public string Vin { get; set; }    
+    public string Vin { get; set; }
+    public string Color { get; set; }
 }
 
-class Person : Base
+public class Person : Base
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
 }
 
-interface ICustomerRepository : IEntityRepository<Customer>
+public interface ICustomerRepository : IEntityRepository<Customer>
 {
 }
  
 // Interfejs generyczny (szablon interfejsu)
-interface IEntityRepository<TEntity> 
+public interface IEntityRepository<TEntity> 
     where TEntity : Base
 {
     List<TEntity> GetAll();
@@ -43,13 +44,13 @@ interface IEntityRepository<TEntity>
 }
 
 
-interface IVehicleRepository : IEntityRepository<Vehicle>
+public interface IVehicleRepository : IEntityRepository<Vehicle>
 {
     List<Vehicle> GetByColor(string color);
     Vehicle GetByVin(string vin);
 }
 
-interface IPersonRepository : IEntityRepository<Person>
+public interface IPersonRepository : IEntityRepository<Person>
 {
     List<Person> GetByPesel(string pesel);
 }
