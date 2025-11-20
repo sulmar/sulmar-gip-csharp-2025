@@ -2,5 +2,5 @@
 
 interface ICustomerRepository
 {
-    List<Customer> GetAll();
+    List<Customer> GetAll();        
 }
