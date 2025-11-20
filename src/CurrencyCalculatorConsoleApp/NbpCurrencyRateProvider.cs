@@ -7,18 +7,7 @@ using System.Threading.Tasks;
 
 namespace CurrencyCalculatorConsoleApp;
 
-
-class ForexCurrencyRateProvider
-{
-    public decimal Get(string  currencyCode)
-    {
-        var rate = (decimal) (4 + Random.Shared.NextDouble());
-
-        return rate;
-    }
-}
-
-class NbpCurrencyRateProvider
+class NbpCurrencyRateProvider : IRateProvider   // Klasa NbpCurrencyRateProvider implementuje interfejs IRateProvider
 {
     public decimal GetRate(string currencyCode)
     {
@@ -29,6 +18,11 @@ class NbpCurrencyRateProvider
         NbpResponse data = http.GetFromJsonAsync<NbpResponse>(url).Result;
 
         return data.Rates[0].Mid;
+    }
+
+    public List<decimal> GetTable()
+    {
+        throw new NotImplementedException();
     }
 
 
