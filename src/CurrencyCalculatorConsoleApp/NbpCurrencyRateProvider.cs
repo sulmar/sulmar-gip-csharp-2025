@@ -7,7 +7,18 @@ using System.Threading.Tasks;
 
 namespace CurrencyCalculatorConsoleApp;
 
-internal class NbpCurrencyRateProvider
+
+class ForexCurrencyRateProvider
+{
+    public decimal Get(string  currencyCode)
+    {
+        var rate = (decimal) (4 + Random.Shared.NextDouble());
+
+        return rate;
+    }
+}
+
+class NbpCurrencyRateProvider
 {
     public decimal GetRate(string currencyCode)
     {
