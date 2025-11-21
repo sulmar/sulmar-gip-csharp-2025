@@ -18,17 +18,22 @@ internal sealed class MonitorState
         return $"Enqueued: {Enqueued} Processed: {Processed} Sent: {Sent}";
     }
 
+    private static object syncLock = new object(); // Monitor
+
     private static MonitorState? _instance = null;
     public static MonitorState? Instance
     {
         get
         {
-            if (_instance == null)
+            lock (syncLock)  // <--- t2
             {
-                _instance = new MonitorState();
-            }
+                if (_instance == null) // <--- t1 
+                {
+                    _instance = new MonitorState();
+                }
 
-            return _instance;
+                return _instance;
+            }
         }
     }
 
