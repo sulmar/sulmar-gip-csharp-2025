@@ -86,8 +86,6 @@ foreach (var customer in results)
 }
 
 
-
-
 // SQL: SELECT * FROM Customers WHERE c.Salary > 100 AND c.Risk = 2;
 
 // LINQ (zbior metod rozszerzajacych interfejs IEnumerable<T>)
