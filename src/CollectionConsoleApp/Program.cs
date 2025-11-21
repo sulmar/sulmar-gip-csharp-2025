@@ -40,6 +40,8 @@ Console.WriteLine(customers.Count);
 
 // TODO: Pokaz klientow ktorych dochod wynosi powyzej 100 zl
 
+
+// Zapis imperatywny
 List<Customer> results = new List<Customer>();
 
 foreach (var customer in customers)
@@ -50,16 +52,34 @@ foreach (var customer in customers)
     }
 }
 
+// Zapis deklaratywny
+// SQL: SELECT * FROM Customers WHERE Salary > 100;
+
+
 Console.WriteLine("Znaleziono: ");
 foreach (var customer in results)
 {
     Console.WriteLine(customer);
 }
 
+// TODO: Pokaz klientow ktorzy Risk maja Wysokie
+results.Clear();
 
+foreach (var customer in customers)
+{
+    if (customer.Risk == RiskType.High)  // Predykat
+    {
+        results.Add(customer);
+    }
+}
 
+// SQL: SELECT * FROM Customers WHERE Risk = 2;
 
-
+Console.WriteLine("Znaleziono: ");
+foreach (var customer in results)
+{
+    Console.WriteLine(customer);
+}
 
 
 
