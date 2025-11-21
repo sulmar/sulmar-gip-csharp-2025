@@ -51,7 +51,7 @@ public class Customer
 
 public class CustomerCacheItem
 {
-    public Order Value { get; }
+    public Customer Value { get; }
     public DateTime Expiration { get; }
 
     public CustomerCacheItem(Order value, TimeSpan ttl)
