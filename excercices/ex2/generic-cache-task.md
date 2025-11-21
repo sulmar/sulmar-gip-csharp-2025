@@ -1,4 +1,4 @@
-# ✅ Zadanie: Refaktoryzacja cache w C# z użyciem generyków
+# ✅ Zadanie: Refaktoryzacja cache w C# z użyciem typów uogólnionych 
 
 ## 🧩 Cel:
 Celem zadania jest analiza powielonego kodu, a następnie jego refaktoryzacja i dodanie obsługi nowego typu (DateTime) **bez tworzenia kolejnej klasy**.
