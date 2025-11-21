@@ -43,7 +43,7 @@ public class NotificationService
 
     public void NotifyBySms(string number, string message)
     {
-        _smsSender.SendSms(number, message);
+        _smsSender.SendBySms(number, message);
     }
 
     public void NotifyByEmail(string email, string message)
@@ -53,7 +53,7 @@ public class NotificationService
 
     public void NotifyByMessenger(string user, string message)
     {
-        _messengerSender.SendMessenger(user, message);
+        _messengerSender.SendToMessenger(user, message);
     }
 }
 ```
