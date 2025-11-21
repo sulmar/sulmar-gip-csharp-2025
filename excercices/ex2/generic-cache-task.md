@@ -54,7 +54,7 @@ public class CustomerCacheItem
     public Customer Value { get; }
     public DateTime Expiration { get; }
 
-    public CustomerCacheItem(Order value, TimeSpan ttl)
+    public CustomerCacheItem(Customer value, TimeSpan ttl)
     {
         Value = value;
         Expiration = DateTime.Now.Add(ttl);
