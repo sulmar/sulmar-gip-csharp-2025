@@ -44,16 +44,19 @@ Console.WriteLine(customers.Count);
 // Zapis imperatywny
 List<Customer> results = new List<Customer>();
 
-foreach (var customer in customers)
+foreach (var c in customers)
 {
-    if (customer.Salary > 100)  // Predykat
+    if (c.Salary > 100)  // Predykat
     {
-        results.Add(customer);
+        results.Add(c);
     }
 }
 
 // Zapis deklaratywny
-// SQL: SELECT * FROM Customers WHERE Salary > 100;
+// SQL: SELECT * FROM Customers AS c WHERE c.Salary > 100;
+
+// Zapis deklaratywny 
+results = customers.Where(c => c.Salary > 100).ToList(); // c - lokalna zmiennia
 
 
 Console.WriteLine("Znaleziono: ");
@@ -74,12 +77,72 @@ foreach (var customer in customers)
 }
 
 // SQL: SELECT * FROM Customers WHERE Risk = 2;
+results = customers.Where(c => c.Risk == RiskType.High).ToList();
 
 Console.WriteLine("Znaleziono: ");
 foreach (var customer in results)
 {
     Console.WriteLine(customer);
 }
+
+
+
+
+// SQL: SELECT * FROM Customers WHERE c.Salary > 100 AND c.Risk = 2;
+
+// LINQ (zbior metod rozszerzajacych interfejs IEnumerable<T>)
+
+results = customers.Where(c => c.Salary > 100 && c.Risk == RiskType.High).ToList();
+
+results = customers
+    .Where(c => c.Salary > 100)
+    .Where(c => c.Risk == RiskType.High)
+    .ToList();
+
+
+// SQL: SELECT * FROM Customers WHERE c.Salary > 100 OR c.Risk = 2;
+results = customers.Where(c => c.Salary > 100 || c.Risk == RiskType.High).ToList();
+
+var riskResults = customers.GroupBy(c => c.Risk).ToList();
+
+foreach (var group in riskResults)
+{
+    Console.WriteLine(group.Key);
+
+    foreach (var customer in group)
+    {
+        Console.WriteLine(customer);
+    }
+}
+
+// TODO: ilu jest klientow w poszczegolnych grupach ryzyka
+// SQL: SELECT Risk AS Ryzyko, COUNT(*) AS Liczba FROM Customers GROUP BY Risk ORDER BY Risk
+
+var riskCountResults = customers
+    .GroupBy(c => c.Risk)
+    .Select(g => new { Ryzyko = g.Key, Liczba = g.Count() }) // Zastosowanie typu anonimowego
+    .OrderBy(g => g.Ryzyko)
+    .ToList();
+
+Console.WriteLine();
+
+
+// Typ anonimowy
+var info = new { Temperature = -1f, Humidity = 0.97f, Description = "Pada snieg" };
+
+Console.WriteLine(info.Humidity);
+
+
+/*
+ class f__AnonymousType0
+{
+    public float Temperature { get; set; }
+    public float Humidity { get; set; }
+    public string Description { get; set; }
+}
+*/
+
+
 
 
 
