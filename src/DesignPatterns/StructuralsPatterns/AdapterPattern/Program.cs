@@ -3,6 +3,12 @@ using AdapterPattern;
 
 Console.WriteLine("Hello, World!");
 
+PrinterFactory printerFactory = new PrinterFactory();
+IPrinter printer = printerFactory.Create("legacy");
+
+printer.Print("Hello World", 3);
+
+
 RadioAdapterFactory factory = new RadioAdapterFactory();
 
 while (true)
@@ -17,6 +23,7 @@ while (true)
 
     radio.Send("Hello World!", 10);
 }
+
 
 
 
