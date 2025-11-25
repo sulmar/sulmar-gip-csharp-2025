@@ -1,6 +1,11 @@
 ﻿namespace ProxyPattern;
 
-class DbProductRepository
+interface IProductRepository
+{
+    Product Get(int id);
+}
+
+class DbProductRepository : IProductRepository
 {
     private readonly IDictionary<int, Product> _products;
 
@@ -27,27 +32,4 @@ class DbProductRepository
     }
 }
 
-class CacheProductRepository
-{
-    private readonly IDictionary<int, Product> _products = new Dictionary<int, Product>();
 
-    public void Add(Product product)
-    {
-        _products.Add(product.Id, product);
-    }
-
-    public Product Get(int id)
-    {
-        if (_products.TryGetValue(id, out var product))
-        {
-            product.CacheHit++;
-
-            return product;
-        }
-
-        else
-            return null;
-    }
-
-
-}

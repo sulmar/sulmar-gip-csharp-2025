@@ -2,28 +2,16 @@
 
 internal class ProductController
 {
-    private readonly DbProductRepository repository;
-    private readonly CacheProductRepository cacheProductRepository;
+    private readonly IProductRepository repository;
 
-    public ProductController(DbProductRepository repository, CacheProductRepository cacheProductRepository)
+    public ProductController(IProductRepository repository)
     {
         this.repository = repository;
-        this.cacheProductRepository = cacheProductRepository;
     }
 
     public Product Get(int id)
     {
-        Product product = cacheProductRepository.Get(id);
-
-        if (product == null)
-        {
-            product = repository.Get(id);
-
-            if (product != null)
-            {
-                cacheProductRepository.Add(product);
-            }
-        }
+        Product product = repository.Get(id);
 
         return product;
     }

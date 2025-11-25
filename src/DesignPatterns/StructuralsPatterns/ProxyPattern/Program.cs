@@ -3,7 +3,7 @@ using ProxyPattern;
 
 Console.WriteLine("Hello, World!");
 
-ProductController controller = new ProductController(new DbProductRepository(), new CacheProductRepository());
+ProductController controller = new ProductController(new CacheProductRepository(new DbProductRepository()));
 
 var product = controller.Get(1);
 Console.WriteLine(product);
