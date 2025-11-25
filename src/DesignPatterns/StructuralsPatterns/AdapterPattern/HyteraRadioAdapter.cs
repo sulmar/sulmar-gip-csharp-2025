@@ -1,8 +1,10 @@
 ﻿namespace AdapterPattern;
 
 // Concrete Adapter B
+// Wariant obiektowy
 class HyteraRadioAdapter : IRadioAdapter
 {
+    // Adaptee
     private readonly HyteraRadio hyteraRadio;
     private readonly string pincode;
 

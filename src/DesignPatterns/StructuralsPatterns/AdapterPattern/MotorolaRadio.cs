@@ -1,6 +1,6 @@
 ﻿namespace AdapterPattern;
 
-internal sealed class MotorolaRadio
+internal class MotorolaRadio
 {
     private bool _enabled;
 
