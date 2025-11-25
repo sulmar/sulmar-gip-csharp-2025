@@ -29,6 +29,7 @@ class CreatedResult : ActionResult {
 class Customer 
 {
     public string Nip { get; set; }
+    public string Regon { get; set; }
 }
 
 interface ICustomerValidator
@@ -44,20 +45,31 @@ class NipCustomerValidator : ICustomerValidator
     }
 }
 
+class RegonCustomerValidator : ICustomerValidator
+{
+    public bool IsValid(Customer customer)
+    {
+        return customer.Regon.Length == 9 || customer.Regon.Length == 14;
+    }
+}
+
 internal class CustomerController
 {
-    private readonly ICustomerValidator _validator;
+    private readonly ICustomerValidator[] _validators;
 
-    public CustomerController(ICustomerValidator validator)
+    public CustomerController(ICustomerValidator[] validators)
     {
-        _validator = validator;
+        _validators = validators;
     }
 
     public ActionResult Post(Customer customer)
     {
-        if (!_validator.IsValid(customer))
+        foreach (ICustomerValidator validator in _validators)
         {
-            return new BadRequestObjectResult("Invalid customer data");
+            if (!validator.IsValid(customer))
+            {
+                return new BadRequestObjectResult("Invalid customer data");
+            }
         }
 
         return new CreatedResult();
