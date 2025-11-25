@@ -2,7 +2,7 @@
 
 class ActionResult { }
 
-class BadRequestObjectResult : ActionResult 
+class BadRequestObjectResult : ActionResult
 {
     private readonly string message;
 
@@ -17,7 +17,8 @@ class BadRequestObjectResult : ActionResult
     }
 }
 
-class CreatedResult : ActionResult {
+class CreatedResult : ActionResult
+{
 
     public override string ToString()
     {
@@ -26,50 +27,26 @@ class CreatedResult : ActionResult {
 
 }
 
-class Customer 
+class Customer
 {
     public string Nip { get; set; }
     public string Regon { get; set; }
 }
 
-interface ICustomerValidator
-{
-    bool IsValid(Customer customer);
-}
-
-class NipCustomerValidator : ICustomerValidator
-{
-    public bool IsValid(Customer customer)
-    {
-        return customer.Nip.Length == 13;
-    }
-}
-
-class RegonCustomerValidator : ICustomerValidator
-{
-    public bool IsValid(Customer customer)
-    {
-        return customer.Regon.Length == 9 || customer.Regon.Length == 14;
-    }
-}
-
 internal class CustomerController
 {
-    private readonly ICustomerValidator[] _validators;
+    private readonly ICustomerValidator _validator;
 
-    public CustomerController(ICustomerValidator[] validators)
+    public CustomerController(ICustomerValidator validator)
     {
-        _validators = validators;
+        _validator = validator;
     }
 
     public ActionResult Post(Customer customer)
     {
-        foreach (ICustomerValidator validator in _validators)
+        if (!_validator.IsValid(customer))
         {
-            if (!validator.IsValid(customer))
-            {
-                return new BadRequestObjectResult("Invalid customer data");
-            }
+            return new BadRequestObjectResult("Invalid customer data");
         }
 
         return new CreatedResult();
