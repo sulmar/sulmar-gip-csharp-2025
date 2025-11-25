@@ -3,6 +3,8 @@ using AdapterPattern;
 
 Console.WriteLine("Hello, World!");
 
+RadioAdapterFactory factory = new RadioAdapterFactory();
+
 while (true)
 {
     Console.Write("Podaj producenta (M)otorola (H)ytera: ");
@@ -11,29 +13,9 @@ while (true)
 
     string message = "Hello World!";
 
-    if (selectedRadio == "M")
-    {
-        MotorolaRadio motorolaRadio = new MotorolaRadio();
+    IRadioAdapter radio = factory.Create(selectedRadio);
 
-        motorolaRadio.PowerOn();
-
-        motorolaRadio.SelectChannel(10);
-
-        motorolaRadio.Send(message);
-
-        motorolaRadio.PowerOff();
-    }
-
-    else if (selectedRadio == "H")
-    {
-        HyteraRadio hyteraRadio = new HyteraRadio();
-
-        hyteraRadio.Init();
-
-        hyteraRadio.SendMessage(10, message);
-
-        hyteraRadio.Release();
-    }
+    radio.Send("Hello World!", 10);
 }
 
 
