@@ -5,9 +5,14 @@ Console.WriteLine("Hello, World!");
 
 Employee employee = new Employee { Name = "John", AmountPerHour = 100, WorkHours = 10, Seniority = 5 };
 
-ISalaryDecorator salary = new BaseSalary();
-salary = new SenioritySalaryDecorator(salary);
-salary = new TrainingSalaryDecorator(ratio: 2, salary);
+// Director
+ISalaryBuilder salaryBuilder = new SalaryBuilder();
+salaryBuilder.AddSeniority(); 
+salaryBuilder.AddTraining(2);
+salaryBuilder.AddTraining(2);
+salaryBuilder.AddMentor();
+
+ISalaryDecorator salary = salaryBuilder.Build();
 
 SalaryCalculator calculator = new SalaryCalculator(salary);
 
