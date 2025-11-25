@@ -4,15 +4,17 @@
 class HyteraRadioAdapter : IRadioAdapter
 {
     private readonly HyteraRadio hyteraRadio;
+    private readonly string pincode;
 
-    public HyteraRadioAdapter(HyteraRadio hyteraRadio)
+    public HyteraRadioAdapter(HyteraRadio hyteraRadio, string pincode)
     {
         this.hyteraRadio = hyteraRadio;
+        this.pincode = pincode;
     }
 
     public void Send(string message, byte channel)
     {
-        hyteraRadio.Init();
+        hyteraRadio.Init(pincode);
 
         hyteraRadio.SendMessage(10, message);
 

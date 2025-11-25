@@ -4,9 +4,10 @@ internal sealed class HyteraRadio
 {
     private RadioStatus status;
 
-    public void Init()
+    public void Init(string pincode)
     {
-        status = RadioStatus.On;
+        if (pincode == "1234")
+            status = RadioStatus.On;
     }
 
     public void SendMessage(byte channel, string message)

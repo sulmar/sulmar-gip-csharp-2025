@@ -16,7 +16,7 @@ namespace AdapterPattern
             return selectedRadio switch
             {
                 "M" => new MotorolaRadioAdapter(new MotorolaRadio()),
-                "H" => new HyteraRadioAdapter(new HyteraRadio()),
+                "H" => new HyteraRadioAdapter(new HyteraRadio(), "1234"),
                 _ => throw new NotSupportedException(),
             };
         }
