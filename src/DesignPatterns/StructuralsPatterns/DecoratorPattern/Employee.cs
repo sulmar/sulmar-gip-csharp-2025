@@ -17,19 +17,69 @@ internal class Employee
 
 internal class SalaryCalculator
 {
+    private ISalaryDecorator salaryDecorator;
+
+    public SalaryCalculator(ISalaryDecorator salaryDecorator)
+    {
+        this.salaryDecorator = salaryDecorator;
+    }
+
     public decimal CalculateSalary(Employee employee)
     {
-        // wynagrodzenie bazowe
-        decimal baseSalary = employee.WorkHours * employee.AmountPerHour;
-
-        // dodatek stazowy
-        baseSalary += employee.Seniority * 10m;
-
-        // dodatek za szkolenie
-        
-
-        return baseSalary;
+        return salaryDecorator.CalculateSalary(employee);               
     }
 }
 
+// Abstract Decorator
+interface ISalaryDecorator
+{
+    decimal CalculateSalary(Employee employee);
+}
+
+// Component
+class BaseSalary : ISalaryDecorator
+{
+    public decimal CalculateSalary(Employee employee)
+    {
+        return employee.WorkHours* employee.AmountPerHour;
+    }
+}
+
+// Concrete Decorator A
+class SenioritySalaryDecorator : ISalaryDecorator
+{
+    // decoratee
+    private readonly ISalaryDecorator _salary;
+
+    private const decimal amountPerYear = 10m;
+
+    public SenioritySalaryDecorator(ISalaryDecorator salary)
+    {
+        this._salary = salary;
+    }
+
+    public decimal CalculateSalary(Employee employee)
+    {
+        return _salary.CalculateSalary(employee) + employee.Seniority * amountPerYear;
+    }
+}
+
+// Concrete Decorator B
+class TrainingSalaryDecorator : ISalaryDecorator
+{
+    // decoratee
+    private readonly ISalaryDecorator _salary;
+    private readonly int ratio;
+
+    public TrainingSalaryDecorator(int ratio, ISalaryDecorator salary)
+    {
+        _salary = salary;
+        this.ratio = ratio;
+    }
+
+    public decimal CalculateSalary(Employee employee)
+    {
+        return _salary.CalculateSalary(employee) * ratio;
+    }
+}
 
