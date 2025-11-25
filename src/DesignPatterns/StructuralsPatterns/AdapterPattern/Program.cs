@@ -3,12 +3,38 @@ using AdapterPattern;
 
 Console.WriteLine("Hello, World!");
 
-MotorolaRadio radio = new MotorolaRadio();
+while (true)
+{
+    Console.Write("Podaj producenta (M)otorola (H)ytera: ");
 
-radio.PowerOn();
+    string selectedRadio = Console.ReadLine();
 
-radio.SelectChannel(10);
+    string message = "Hello World!";
 
-radio.Send("Hello World!");
+    if (selectedRadio == "M")
+    {
+        MotorolaRadio motorolaRadio = new MotorolaRadio();
 
-radio.PowerOff();
+        motorolaRadio.PowerOn();
+
+        motorolaRadio.SelectChannel(10);
+
+        motorolaRadio.Send(message);
+
+        motorolaRadio.PowerOff();
+    }
+
+    else if (selectedRadio == "H")
+    {
+        HyteraRadio hyteraRadio = new HyteraRadio();
+
+        hyteraRadio.Init();
+
+        hyteraRadio.SendMessage(10, message);
+
+        hyteraRadio.Release();
+    }
+}
+
+
+
