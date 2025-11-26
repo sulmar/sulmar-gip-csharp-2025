@@ -12,14 +12,14 @@ class Order
     public decimal TotalAmount { get; set; }
 }
 
-// Happy Hours - 10% upustu w godzinach od 9:00 - 15:00
+// Happy Hours - 10% upustu w godzinach od 8:30 - 15:30
 internal class HappyHoursOrderCalculator
 {
-    private readonly int from;
-    private readonly int to;
+    private readonly TimeSpan from;
+    private readonly TimeSpan to;
     private readonly decimal percentage;
 
-    public HappyHoursOrderCalculator(int from, int to, decimal percentage)
+    public HappyHoursOrderCalculator(TimeSpan from, TimeSpan to, decimal percentage)
     {
         this.from = from;
         this.to = to;
@@ -28,7 +28,7 @@ internal class HappyHoursOrderCalculator
 
     public decimal CalculateDiscount(Order order)
     {
-        if (order.OrderDate.Hour >= from && order.OrderDate.Hour <= to)
+        if (order.OrderDate.TimeOfDay >= from && order.OrderDate.TimeOfDay <= to)
         {
             return order.TotalAmount - order.TotalAmount * percentage;
         }
