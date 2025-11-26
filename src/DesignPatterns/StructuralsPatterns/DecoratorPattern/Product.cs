@@ -18,7 +18,9 @@ class ProductCalculator
 
     public decimal Calculate(Product product, int quantity)
     {
-        return pricingRepository.GetPrice(product.Id) * quantity;
+        var price = pricingRepository.GetPrice(product.Id);
+
+        return price * quantity;
     }
 }
 
