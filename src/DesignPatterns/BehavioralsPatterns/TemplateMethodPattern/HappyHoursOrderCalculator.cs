@@ -36,3 +36,26 @@ internal class HappyHoursOrderCalculator
             return order.TotalAmount;
     }
 }
+
+// SpecialDate - 20% upustu w okreslony dzien
+class SpecialDateOrderCalculator
+{
+    private readonly DateTime specialDate;
+    private readonly decimal percentage;
+
+    public SpecialDateOrderCalculator(DateTime specialDate, decimal percentage)
+    {
+        this.specialDate = specialDate;
+        this.percentage = percentage;
+    }
+
+    public decimal CalculateDiscount(Order order)
+    {
+        if (order.OrderDate.Date == specialDate.Date)
+        {
+            return order.TotalAmount - order.TotalAmount * percentage;
+        }
+        else
+            return order.TotalAmount;
+    }
+}

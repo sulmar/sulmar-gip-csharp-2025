@@ -10,5 +10,10 @@ TimeSpan to = TimeSpan.Parse("15:30");
 
 HappyHoursOrderCalculator calculator = new HappyHoursOrderCalculator(from, to, 0.1m);
 var result = calculator.CalculateDiscount(order);
-
 Console.WriteLine($"{result:C2}");
+
+DateTime specialDate = DateTime.Parse("2025-11-26");
+SpecialDateOrderCalculator calculator2 = new SpecialDateOrderCalculator(specialDate, 0.2m);
+var result2 = calculator2.CalculateDiscount(order);
+
+Console.WriteLine($"{result2:C2}");
