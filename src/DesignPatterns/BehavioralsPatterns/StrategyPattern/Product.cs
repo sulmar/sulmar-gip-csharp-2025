@@ -72,3 +72,20 @@ class OpenDoorPricingStrategy : IPricingStrategy
         return quantity * 10m;
     }
 }
+
+// Decorator Strategi
+class DiscountPricingStrategy : IPricingStrategy
+{
+    // Decoratee
+    private IPricingStrategy pricingStrategy;
+
+    public DiscountPricingStrategy(IPricingStrategy pricingStrategy)
+    {
+        this.pricingStrategy = pricingStrategy;
+    }
+
+    public decimal CalculatePrice(Product product, decimal quantity)
+    {
+        return pricingStrategy.CalculatePrice(product, quantity) * (1 - 0.1m);
+    }
+}
