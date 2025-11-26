@@ -3,6 +3,15 @@ using DecoratorPattern;
 
 Console.WriteLine("Hello, World!");
 
+Product product = new Product { Name = "a", UnitPrice = 100m };
+
+IPricingRepository pricingRepository = new FakeProductRepository();
+ProductCalculator productCalculator = new ProductCalculator(pricingRepository);
+
+var total = productCalculator.Calculate(product, 3);
+
+Console.WriteLine(total);
+
 Employee employee = new Employee { Name = "John", AmountPerHour = 100, WorkHours = 10, Seniority = 5 };
 
 // Director
