@@ -89,3 +89,4 @@ class DiscountPricingStrategy : IPricingStrategy
         return pricingStrategy.CalculatePrice(product, quantity) * (1 - 0.1m);
     }
 }
+
