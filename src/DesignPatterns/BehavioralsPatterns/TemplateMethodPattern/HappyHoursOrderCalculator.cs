@@ -13,49 +13,61 @@ class Order
 }
 
 // Happy Hours - 10% upustu w godzinach od 8:30 - 15:30
-internal class HappyHoursOrderCalculator
+internal class HappyHoursOrderCalculator : PercentageOrderCalculatorTemplate
 {
     private readonly TimeSpan from;
     private readonly TimeSpan to;
-    private readonly decimal percentage;
 
     public HappyHoursOrderCalculator(TimeSpan from, TimeSpan to, decimal percentage)
+        : base(percentage)
     {
         this.from = from;
         this.to = to;
-        this.percentage = percentage;
     }
 
-    public decimal CalculateDiscount(Order order)
-    {
-        if (order.OrderDate.TimeOfDay >= from && order.OrderDate.TimeOfDay <= to)
-        {
-            return order.TotalAmount - order.TotalAmount * percentage;
-        }
-        else
-            return order.TotalAmount;
-    }
+    public override bool CanDiscount(Order order) => order.OrderDate.TimeOfDay >= from && order.OrderDate.TimeOfDay <= to;
 }
 
 // SpecialDate - 20% upustu w okreslony dzien
-class SpecialDateOrderCalculator
+class SpecialDateOrderCalculator : PercentageOrderCalculatorTemplate
 {
     private readonly DateTime specialDate;
-    private readonly decimal percentage;
 
     public SpecialDateOrderCalculator(DateTime specialDate, decimal percentage)
+        : base(percentage)
     {
         this.specialDate = specialDate;
+    }
+
+    public override bool CanDiscount(Order order) => order.OrderDate.Date == specialDate.Date;
+
+}
+
+abstract class PercentageOrderCalculatorTemplate : OrderCalculatorTemplate
+{
+    private decimal percentage;
+
+    protected PercentageOrderCalculatorTemplate(decimal percentage)
+    {
         this.percentage = percentage;
     }
 
+    public override decimal GetDiscount(Order order) => order.TotalAmount - order.TotalAmount * percentage;
+}
+
+// Template Method 
+abstract class OrderCalculatorTemplate
+{
+    public abstract bool CanDiscount(Order order);
+    public abstract decimal GetDiscount(Order order);
+
     public decimal CalculateDiscount(Order order)
     {
-        if (order.OrderDate.Date == specialDate.Date)
+        if (CanDiscount(order)) // Predykat
         {
-            return order.TotalAmount - order.TotalAmount * percentage;
+            return GetDiscount(order); // Rabat
         }
         else
-            return order.TotalAmount;
+            return order.TotalAmount; // Brak rabatu
     }
 }
