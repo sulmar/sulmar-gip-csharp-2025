@@ -1,8 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using DecoratorPattern.Abstractions;
 using DecoratorPattern.Application;
+using DecoratorPattern.Domain.Abstractions;
+using DecoratorPattern.Domain.Models;
 using DecoratorPattern.Infrastructures;
-using DecoratorPattern.Models;
 
 Console.WriteLine("Hello, World!");
 

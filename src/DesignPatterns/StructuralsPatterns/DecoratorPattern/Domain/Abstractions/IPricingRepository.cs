@@ -1,4 +1,4 @@
-﻿namespace DecoratorPattern.Abstractions;
+﻿namespace DecoratorPattern.Domain.Abstractions;
 
 interface IPricingRepository
 {

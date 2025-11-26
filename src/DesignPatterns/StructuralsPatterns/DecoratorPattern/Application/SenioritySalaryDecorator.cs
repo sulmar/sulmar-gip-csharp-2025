@@ -1,5 +1,5 @@
-﻿using DecoratorPattern.Abstractions;
-using DecoratorPattern.Models;
+﻿using DecoratorPattern.Domain.Abstractions;
+using DecoratorPattern.Domain.Models;
 
 namespace DecoratorPattern.Application;
 

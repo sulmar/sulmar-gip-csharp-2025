@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DecoratorPattern.Models;
+namespace DecoratorPattern.Domain.Models;
 
 internal class Employee
 {

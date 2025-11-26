@@ -1,4 +1,4 @@
-﻿using DecoratorPattern.Abstractions;
+﻿using DecoratorPattern.Domain.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

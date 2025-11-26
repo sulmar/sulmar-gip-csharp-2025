@@ -1,4 +1,4 @@
-﻿namespace DecoratorPattern.Models;
+﻿namespace DecoratorPattern.Domain.Models;
 
 internal class Product
 {

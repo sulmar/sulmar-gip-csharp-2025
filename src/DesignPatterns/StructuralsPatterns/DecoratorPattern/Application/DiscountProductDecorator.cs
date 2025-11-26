@@ -1,4 +1,4 @@
-﻿using DecoratorPattern.Abstractions;
+﻿using DecoratorPattern.Domain.Abstractions;
 
 namespace DecoratorPattern.Application;
 
