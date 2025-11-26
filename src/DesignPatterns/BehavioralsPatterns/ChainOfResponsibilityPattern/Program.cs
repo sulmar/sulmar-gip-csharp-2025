@@ -5,7 +5,13 @@ Console.WriteLine("Hello, World!");
 
 Message message = new Message { From = "john@domain.com", To = "AE:PL-00000-11111-YYYYY-22", Subject = "Nr zam 1", Body = "Lorem ipsum 953-120-45-91" };
 
-IMessageHandler chain = MessageHandlerFactory.Create();
+IMessageHandler chain = MessageHandlerFactory.Create(
+    new ExceptionMessageHandler(),
+    new ValidateFromWhiteListMessageHandler(),
+    new ValidateADEMessageHandler(),
+    new ValidateSubjectOrderNumberMessageHandler(),
+    new ValidateAndExtractNipMessageHandler()
+    );
 
 MessageProcessor processor = new MessageProcessor(chain);
 var result = processor.Process(message);

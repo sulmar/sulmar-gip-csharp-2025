@@ -43,7 +43,17 @@ class MessageHandlerFactory
             .SetNext(new ValidateAndExtractNipMessageHandler());
 
         return root;
-    }    
+    }  
+    
+    public static IMessageHandler Create(params IMessageHandler[] handlers)
+    {
+        foreach(var (current, next) in handlers.Zip(handlers.Skip(1)))
+        {
+            current.SetNext(next);
+        }
+
+        return handlers[0];
+    }
 }
 
 class MessageProcessor
