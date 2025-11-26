@@ -10,61 +10,66 @@ internal class Message
     public string Body { get; set; }
 }
 
+class MessageContext
+{
+    public Message Request { get; set; }
+    public MessageResponse Response { get; set; }
+
+    public MessageContext(Message message)
+    {
+        this.Request = message;
+
+        Response = new MessageResponse();
+    }
+}
+
+class MessageResponse
+{
+    public string Nip { get; set; }
+    public string Regon { get; set; }
+}
+
 
 class MessageHandlerFactory
 {
     public static IMessageHandler Create()
     {
-        // 1. Walidacja nadawcy (biala lista)
+        IMessageHandler root = new ExceptionMessageHandler();
 
-        IMessageHandler validateWhiteListhandler = new ValidateFromWhiteListMessageHandler();
+        root
+            .SetNext(new ValidateFromWhiteListMessageHandler())
+            .SetNext(new ValidateADEMessageHandler())
+            .SetNext(new ValidateSubjectOrderNumberMessageHandler())
+            .SetNext(new ValidateAndExtractNipMessageHandler());
 
-        // 2. Weryfikacja tematu (czy zawiera nr zamowienia)
-        IMessageHandler subjectHandler = new ValidateSubjectOrderNumberMessageHandler();
-
-        // 3. TODO: weryfikacja formatu adresu e-doreczen (AED)
-        // AE:PL-XXXXX-XXXXX-YYYYY-ZZ        
-
-        // 4. Ekstracja NIP z wiadomosci
-        IMessageHandler nipHandler = new ValidateAndExtractNipMessageHandler();
-
-        validateWhiteListhandler.SetNext(subjectHandler);
-        subjectHandler.SetNext(nipHandler);
-
-        return validateWhiteListhandler;
-    }
+        return root;
+    }    
 }
 
 class MessageProcessor
 {
-    IMessageHandler handler = null;
+    private readonly IMessageHandler chain = null;
 
-    public MessageProcessor(IMessageHandler handler)
+    public MessageProcessor(IMessageHandler chain)
     {
-        this.handler = handler;
+        this.chain = chain;
     }
 
     public string Process(Message message)
-    {            
-        handler.Handle(message);
+    {
+        MessageContext context = new MessageContext(message);
 
-        throw new NotImplementedException();
-
-        // return nip;
+        chain.Handle(context);
+        
+        return context.Response.Nip;
     }
-
-  
-
-    
-
-  
 }
 
 // Abstract Handler
 interface IMessageHandler
 {
-    void Handle(Message message);
-    void SetNext(IMessageHandler next);
+    void Handle(MessageContext context);
+    IMessageHandler SetNext(IMessageHandler next);
 }
 
 
@@ -72,14 +77,16 @@ interface IMessageHandler
 abstract class MessageHandler : IMessageHandler
 {
     private IMessageHandler _next;
-    public void SetNext(IMessageHandler next)
+    public IMessageHandler SetNext(IMessageHandler next)
     {
         _next = next;
+
+        return next;
     }
-    public virtual void Handle(Message message)
+    public virtual void Handle(MessageContext context)
     {
-        if (_next != null) 
-            _next.Handle(message);
+        if (_next != null)
+            _next.Handle(context);
     }
 }
 
@@ -88,11 +95,11 @@ class ValidateFromWhiteListMessageHandler : MessageHandler, IMessageHandler
 {
     private string[] whitelist = new string[] { "john@domain.com", "bob@domain.com" };
 
-    public override void Handle(Message message)
+    public override void Handle(MessageContext context)
     {
-        ValidateFromWhiteList(message);
+        ValidateFromWhiteList(context.Request);
 
-        base.Handle(message);
+        base.Handle(context);
     }
 
     private void ValidateFromWhiteList(Message message)
@@ -107,11 +114,11 @@ class ValidateFromWhiteListMessageHandler : MessageHandler, IMessageHandler
 // Concrete Handler B
 class ValidateSubjectOrderNumberMessageHandler : MessageHandler, IMessageHandler
 {
-    public override void Handle(Message message)
+    public override void Handle(MessageContext context)
     {
-        ValidateSubjectOrderNumber(message);
+        ValidateSubjectOrderNumber(context.Request);
 
-        base.Handle(message);
+        base.Handle(context);
     }
 
     private static void ValidateSubjectOrderNumber(Message message)
@@ -126,12 +133,13 @@ class ValidateSubjectOrderNumberMessageHandler : MessageHandler, IMessageHandler
 // Concrete Handler C
 class ValidateAndExtractNipMessageHandler : MessageHandler, IMessageHandler
 {
-    public override void Handle(Message message)
+    public override void Handle(MessageContext context)
     {
-        // TODO: zwroc nr nip
-        ValidateAndExtractNip(message);
+        string nip = ValidateAndExtractNip(context.Request);
 
-        base.Handle(message);
+        context.Response.Nip = nip;
+
+        base.Handle(context);
     }
 
     private static string ValidateAndExtractNip(Message message)
@@ -147,5 +155,44 @@ class ValidateAndExtractNipMessageHandler : MessageHandler, IMessageHandler
 
         string nip = match.Value;
         return nip;
+    }
+}
+
+
+class ValidateADEMessageHandler : MessageHandler, IMessageHandler
+{
+    public override void Handle(MessageContext context)
+    {
+        ValidateADE(context.Request);
+
+        base.Handle(context);
+    }
+
+    private void ValidateADE(Message message)
+    {
+        string pattern = @"AE:PL-\d{5}-\d{5}-[A-Z]{5}-\d{2}";
+        Regex regex = new Regex(pattern);
+
+        if (!regex.IsMatch(message.To))
+            throw new FormatException("Bledny format ADE");
+
+    }
+}
+
+class ExceptionMessageHandler : MessageHandler, IMessageHandler
+{
+    public override void Handle(MessageContext context)
+    {
+        try
+        {
+            base.Handle(context);
+        }
+        catch(Exception e)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(e.Message);
+            Console.ResetColor();
+        }
+        
     }
 }
