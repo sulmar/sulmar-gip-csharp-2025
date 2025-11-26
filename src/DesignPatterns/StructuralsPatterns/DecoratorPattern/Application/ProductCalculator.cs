@@ -1,11 +1,7 @@
-﻿namespace DecoratorPattern;
+﻿using DecoratorPattern.Abstractions;
+using DecoratorPattern.Models;
 
-internal class Product
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public decimal UnitPrice { get; set; }    
-}
+namespace DecoratorPattern.Application;
 
 class ProductCalculator
 {

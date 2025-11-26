@@ -1,4 +1,7 @@
-﻿namespace DecoratorPattern;
+﻿using DecoratorPattern.Abstractions;
+using DecoratorPattern.Models;
+
+namespace DecoratorPattern.Application;
 
 // Concrete Decorator A
 class SenioritySalaryDecorator : ISalaryDecorator
@@ -10,7 +13,7 @@ class SenioritySalaryDecorator : ISalaryDecorator
 
     public SenioritySalaryDecorator(ISalaryDecorator salary)
     {
-        this._salary = salary;
+        _salary = salary;
     }
 
     public decimal CalculateSalary(Employee employee)

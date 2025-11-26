@@ -1,4 +1,7 @@
-﻿namespace DecoratorPattern;
+﻿using DecoratorPattern.Abstractions;
+using DecoratorPattern.Models;
+
+namespace DecoratorPattern.Application;
 
 internal class SalaryCalculator
 {

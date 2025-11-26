@@ -1,11 +1,14 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using DecoratorPattern;
+using DecoratorPattern.Abstractions;
+using DecoratorPattern.Application;
+using DecoratorPattern.Infrastructures;
+using DecoratorPattern.Models;
 
 Console.WriteLine("Hello, World!");
 
 Product product = new Product { Id = 1, Name = "a", UnitPrice = 100m };
 
-IPricingRepository pricingRepository = new DiscountProductRepository(0.1m, new FakeProductRepository());
+IPricingRepository pricingRepository = new DiscountProductDecorator(new FakeProductRepository(), new FakeDiscountRepository());
 ProductCalculator productCalculator = new ProductCalculator(pricingRepository);
 
 var total = productCalculator.Calculate(product, 3);

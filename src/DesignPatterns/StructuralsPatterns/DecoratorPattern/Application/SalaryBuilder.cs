@@ -1,18 +1,11 @@
-﻿using System;
+﻿using DecoratorPattern.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DecoratorPattern;
-
-interface ISalaryBuilder
-{
-    void AddSeniority();
-    void AddTraining(int ratio);
-    void AddMentor();
-    ISalaryDecorator Build();
-}
+namespace DecoratorPattern.Application;
 
 internal class SalaryBuilder : ISalaryBuilder
 {

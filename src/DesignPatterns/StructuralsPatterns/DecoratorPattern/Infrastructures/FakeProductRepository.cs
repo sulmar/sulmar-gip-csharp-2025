@@ -1,4 +1,7 @@
-﻿namespace DecoratorPattern;
+﻿using DecoratorPattern.Abstractions;
+using DecoratorPattern.Models;
+
+namespace DecoratorPattern.Infrastructures;
 
 class FakeProductRepository : IPricingRepository
 {

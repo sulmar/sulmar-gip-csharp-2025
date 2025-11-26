@@ -1,4 +1,6 @@
-﻿namespace DecoratorPattern;
+﻿using DecoratorPattern.Models;
+
+namespace DecoratorPattern.Abstractions;
 
 // Abstract Decorator
 interface ISalaryDecorator
