@@ -6,7 +6,9 @@ Console.WriteLine("Hello, World!");
 
 Message message = new Message { From = "john@domain.com", Subject = "Nr zam 1", Body = "Lorem ipsum 953-120-45-91" };
 
-MessageProcessor processor = new MessageProcessor();
+IMessageHandler chain = MessageHandlerFactory.Create();
+
+MessageProcessor processor = new MessageProcessor(chain);
 var result = processor.Process(message);
 
 
