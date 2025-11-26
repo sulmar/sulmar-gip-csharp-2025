@@ -1,5 +1,6 @@
 ﻿namespace DecoratorPattern;
 
+// Decorator
 class DiscountProductRepository : IPricingRepository
 {
     private decimal discount;

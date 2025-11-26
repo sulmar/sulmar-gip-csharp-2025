@@ -3,9 +3,9 @@ using DecoratorPattern;
 
 Console.WriteLine("Hello, World!");
 
-Product product = new Product { Name = "a", UnitPrice = 100m };
+Product product = new Product { Id = 1, Name = "a", UnitPrice = 100m };
 
-IPricingRepository pricingRepository = new FakeProductRepository();
+IPricingRepository pricingRepository = new DiscountProductRepository(0.1m, new FakeProductRepository());
 ProductCalculator productCalculator = new ProductCalculator(pricingRepository);
 
 var total = productCalculator.Calculate(product, 3);
